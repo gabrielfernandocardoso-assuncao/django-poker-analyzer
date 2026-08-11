@@ -1,0 +1,13 @@
+{% extends 'games/base.html' %}
+
+{% block title %} New {% endblock %}
+
+{% block content %}
+    <div class="col-12">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button name="submit" class="btn bnt-success">Create</button>
+        </form>
+    </div>
+{% endblock %}

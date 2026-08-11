@@ -12,9 +12,9 @@ class Player(models.Model):
 
 class Game(models.Model):
     # date
-    date = models.DateField()
+    date = models.DateField(auto_now_add=True)
     # base_buy_in_value
-    base_buy_in_value = models.DecimalField
+    base_buy_in_value = models.DecimalField(decimal_places=2, max_digits=10)
     # initial_chips
     initial_chips = models.IntegerField()
     # is_active
