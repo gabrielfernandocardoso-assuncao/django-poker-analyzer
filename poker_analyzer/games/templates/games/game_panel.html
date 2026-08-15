@@ -16,7 +16,8 @@
         <p><strong>Jogadores Na Mesa:</strong></p>
         {% for session in players_at_table %}
             <ul>
-                <li>{{ session.player.name }}</li>
+                <li>{{ session.player.name }} | Rebuys: {{ session.rebuys }}</li>
+                <a href="{% url 'add_rebuy' session.id %}" class="btn btn-success">Dar Rebuy</a>
             </ul>
         {% empty %}
             <ul>

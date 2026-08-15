@@ -47,3 +47,11 @@ def game_panel(request, game_id):
     context = {'form' : form, 'players_at_table' : players_at_table, 'game' : game}
 
     return render(request, 'games/game_panel.html', context)
+
+def add_rebuy(request, session_id):
+    sessao = get_object_or_404(PlayerSession, id = session_id)
+
+    sessao.rebuys += 1
+    sessao.save()
+
+    return HttpResponseRedirect(reverse('game_panel', args=[sessao.game.id]))
