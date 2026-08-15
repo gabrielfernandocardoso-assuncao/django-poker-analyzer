@@ -3,27 +3,47 @@
 {% block title %} Main {% endblock %}
 
 {% block content %}
-    <div class="col-12">
-        <h1><strong>Jogos: </strong></h1>
-        
-        {% for game in games %}
-            <div class="card mt-4" style="width: 18rem;">
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Histórico de Mesas</h2>
+</div>
+
+<div class="row g-4">
+    {% for game in games %}
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card card-poker h-100">
                 <div class="card-body">
-                    <h5 class="card-title">Data: {{ game.date }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Active: {{ game.is_active }}</h6>
-                    {% if game.is_active %}
-                        <a href="{% url 'game_panel' game.id %}">Entrar</a>
-                    {% else %}
-                        <p>Mesa Fechada</p>
-                    {% endif %}
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title text-light mb-0">
+                            <i class="bi bi-calendar3"></i> {{ game.date }}
+                        </h5>
+                        {% if game.is_active %}
+                            <span class="badge bg-success rounded-pill px-3 py-2">Ativa</span>
+                        {% else %}
+                            <span class="badge bg-secondary rounded-pill px-3 py-2">Fechada</span>
+                        {% endif %}
+                    </div>
+                    
+                    <hr class="border-secondary">
+                    
+                    <div class="d-grid mt-4">
+                        {% if game.is_active %}
+                            <a href="{% url 'game_panel' game.id %}" class="btn btn-outline-success">
+                                <i class="bi bi-box-arrow-in-right"></i> Entrar na Mesa
+                            </a>
+                        {% else %}
+                            <button class="btn btn-outline-secondary" disabled>
+                                <i class="bi bi-lock-fill"></i> Jogo Encerrado
+                            </button>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        {% empty %}
-            <ul>
-                <li>Sem jogos.</li>
-            </ul>
-        {% endfor %}
-        
-
-    </div>
+        </div>
+    {% empty %}
+        <div class="col-12 text-center py-5">
+            <i class="bi bi-suit-club text-secondary" style="font-size: 4rem;"></i>
+            <h4 class="text-secondary mt-3">Nenhum jogo registrado ainda.</h4>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}
