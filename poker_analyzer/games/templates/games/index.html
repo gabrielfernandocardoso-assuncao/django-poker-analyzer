@@ -4,6 +4,25 @@
 
 {% block content %}
     <div class="col-12">
-        <p>Pagina Incial</p>
+        <h1><strong>Jogos: </strong></h1>
+
+        {% for game in games %}
+            <div class="card mt-4" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Data: {{ game.date }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Active: {{ game.is_active }}</h6>
+                    {% if game.is_active %}
+                        <a href="{% url 'game_panel' game.id %}">Entrar</a>
+                    {% else %}
+                        <p>Mesa Fechada</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <ul>
+                <li>Sem jogos.</li>
+            </ul>
+        {% endfor %}
+
     </div>
 {% endblock %}

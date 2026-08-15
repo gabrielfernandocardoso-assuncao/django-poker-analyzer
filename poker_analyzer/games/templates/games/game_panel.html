@@ -1,0 +1,27 @@
+{% extends 'games/base.html' %}
+
+{% block title %} Game {% endblock %}
+
+{% block content %}
+    <div class="col-12">
+        <h1>Partida Do Dia: {{ game.date }} || Buy-in: R$ {{ game.base_buy_in_value }}</h1>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" name="submit">Adicionar Mesa</button>
+        </form>
+
+        <p><strong>Jogadores Na Mesa:</strong></p>
+        {% for session in players_at_table %}
+            <ul>
+                <li>{{ session.player.name }}</li>
+            </ul>
+        {% empty %}
+            <ul>
+                <li>Sem jogadores na mesa</li>
+            </ul>
+        {% endfor %}
+    </div>
+{% endblock %}
