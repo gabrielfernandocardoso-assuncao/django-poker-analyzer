@@ -55,3 +55,28 @@ def add_rebuy(request, session_id):
     sessao.save()
 
     return HttpResponseRedirect(reverse('game_panel', args=[sessao.game.id]))
+
+def end_game(request, game_id):
+    game = get_object_or_404(Game, id=game_id)
+
+    players = PlayerSession.objects.filter(game=game)
+
+    if request.method == 'POST':
+        for session in players:
+            # pega o valor digitado no input chips_X
+            fichas = request.POST.get(f'chips_{session.id}')
+            if fichas:
+                session.final_chips = int(fichas)
+                session.save()
+
+        # desativa a mesa pra ninguem dar rebuy fantasma
+        game.is_active = False
+        game.save()
+
+        return HttpResponseRedirect(reverse('index'))
+    
+    context = {'game' : game, 'players': players}
+
+    return render(request, 'games/end_game.html', context)
+    
+        

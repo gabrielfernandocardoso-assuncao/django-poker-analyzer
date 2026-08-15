@@ -6,13 +6,15 @@
     <div class="col-12">
         <h1>Partida Do Dia: {{ game.date }} || Buy-in: R$ {{ game.base_buy_in_value }}</h1>
 
+        
         <form action="" method="post">
             {% csrf_token %}
             {{ form.as_p }}
 
-            <button type="submit" name="submit">Adicionar Mesa</button>
+            <button type="submit" name="submit">Adicionar Jogador</button>
         </form>
 
+        {% if game.is_active %}
         <p><strong>Jogadores Na Mesa:</strong></p>
         {% for session in players_at_table %}
             <ul>
@@ -24,5 +26,9 @@
                 <li>Sem jogadores na mesa</li>
             </ul>
         {% endfor %}
+        {% else %}
+            <p>Jogo encerrado</p>
+        {% endif %}
+        <a href="{% url 'end_game' game.id %}" class="btn btn-danger">Encerrar Partida</a>
     </div>
 {% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'games/base.html' %}
+
+{% block title %} End Game {% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+            {% for session in players %}
+                <label for="">{{ session.player.name }}</label>
+                <input type="number" name="chips_{{ session.id }}" required placeholder="Insira um valor...">
+            {% endfor %}
+            <button name="submit">Encerrar mesa</button>
+    </form>
+{% endblock %}
